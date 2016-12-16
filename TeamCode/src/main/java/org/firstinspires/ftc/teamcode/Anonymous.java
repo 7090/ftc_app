@@ -25,6 +25,8 @@ public class Anonymous extends LinearOpMode {
         loader = hardwareMap.dcMotor.get("loader");
         loader2 = hardwareMap.dcMotor.get("loader2");
         shooter = hardwareMap.dcMotor.get("shooter");
+        loader2.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
@@ -35,7 +37,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < .5) {
+        while (eTime.time() < 2.5) {
         }
 
         leftDrive.setPower(0.0);
@@ -68,7 +70,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < 2.5) {
+        while (eTime.time() < .5) {
         }
 
         leftDrive.setPower(0.0);
