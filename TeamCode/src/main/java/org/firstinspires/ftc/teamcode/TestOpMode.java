@@ -30,7 +30,7 @@ public class TestOpMode extends OpMode {
 
     }
 
-/*nuh*/
+
 
     public void loop() {
         leftDrive.setPower(-gamepad1.left_stick_y);
