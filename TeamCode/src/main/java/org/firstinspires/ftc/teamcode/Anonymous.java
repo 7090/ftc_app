@@ -84,7 +84,7 @@ public class Anonymous extends LinearOpMode {
         shooter.setPower(1);
         loader2.setPower(1);
         }
-        nuh
+        
 
         {
         eTime.reset();
