@@ -21,7 +21,7 @@ public class Anonymous extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         leftDrive = hardwareMap.dcMotor.get("leftDrive");
         rightDrive = hardwareMap.dcMotor.get("rightDrive");
-        leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         loader = hardwareMap.dcMotor.get("loader");
         loader2 = hardwareMap.dcMotor.get("loader2");
         shooter = hardwareMap.dcMotor.get("shooter");
@@ -37,7 +37,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < 2.5) {
+        while (eTime.time() < 2) {
         }
 
         leftDrive.setPower(0.0);
@@ -70,7 +70,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < .5) {
+        while (eTime.time() < 1) {
         }
 
         leftDrive.setPower(0.0);
@@ -84,7 +84,7 @@ public class Anonymous extends LinearOpMode {
         shooter.setPower(1);
         loader2.setPower(1);
         }
-        
+
 
         {
         eTime.reset();

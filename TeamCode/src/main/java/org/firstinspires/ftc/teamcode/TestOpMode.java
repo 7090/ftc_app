@@ -23,14 +23,14 @@ public class TestOpMode extends OpMode {
         shooter = hardwareMap.dcMotor.get("shooter");
         loader2 = hardwareMap.dcMotor.get("loader2");
         loader2.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
         loader.setDirection(DcMotor.Direction.REVERSE);
         shooter.setDirection(DcMotor.Direction.REVERSE);
 
 
     }
 
-/*nuh*/
+
 
     public void loop() {
         leftDrive.setPower(-gamepad1.left_stick_y);
