@@ -1,3 +1,11 @@
+/**
+ * Program Name: TestOpMode.java
+ * Programmer: Veronica Watson
+ Team: First Appalachian Robotics 7090
+ * Purpose: to run a robot during Controlled portion.
+ */
+
+
  package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -17,43 +25,52 @@ public class TestOpMode extends OpMode {
     DcMotor shooter;
     DcMotor loader2;
     public void init() {
-        leftDrive = hardwareMap.dcMotor.get("leftDrive");
-        rightDrive = hardwareMap.dcMotor.get("rightDrive");
-        loader = hardwareMap.dcMotor.get("loader");
-        shooter = hardwareMap.dcMotor.get("shooter");
-        loader2 = hardwareMap.dcMotor.get("loader2");
-        loader2.setDirection(DcMotor.Direction.REVERSE);
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        loader.setDirection(DcMotor.Direction.REVERSE);
-        shooter.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive = hardwareMap.dcMotor.get("leftDrive");   //assigns the motor leftDrive
+        rightDrive = hardwareMap.dcMotor.get("rightDrive"); //assigns the motor rightDrive
+        loader = hardwareMap.dcMotor.get("loader"); //assigns the motor loader
+        shooter = hardwareMap.dcMotor.get("shooter"); //assigns the motor shooter
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
+        loader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
+        shooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
 
 
     }
 
 
 
-    public void loop() {
-        leftDrive.setPower(-gamepad1.left_stick_y);
-        rightDrive.setPower(-gamepad1.right_stick_y);
+    public void loop() {    // this keeps the controls going in a constant loop.
+        leftDrive.setPower(-gamepad1.left_stick_y);     // this assigns the left drive motor to run
+                                                        // when the left stick is manipulated
+        rightDrive.setPower(-gamepad1.right_stick_y);     // this assigns the right drive motor to run
+                                                         // when the right stick is manipulated
 
 
-        if (gamepad1.right_trigger > 0.1) {
+        if (gamepad1.right_trigger > 0.1) {     // this says that when the trigger is pushed, it
+                                                // activates the shooter, and to rest otherwise.
             shooter.setPower(1);
         } else {
             shooter.setPower(0);
         }
 
-        if (gamepad1.left_bumper) {
-            loader.setPower(-1);
+        if (gamepad1.left_bumper) {     // this says that when the left bumper is pushed, it
+            loader.setPower(-1);        // runs the loader motor backwards, and otherwise, when the
+                                        //trigger is pressed, to send the loader motor forward and
+                                        //otherwise, stop all motion
         } else if (gamepad1.left_trigger > 0.7) {
             loader.setPower(1);
+
         } else {
             loader.setPower(0);
+
+
+
+
         }
-        if (gamepad1.right_bumper) {
-            loader2.setPower(1);
+        if (gamepad1.right_bumper) {    // this says that when the right bumper is pressed, reverse
+            shooter.setPower(-1);      //the shooter motor, otherwise the motor is inactive
+
         } else {
-            loader2.setPower(0);
+            shooter.setPower(0);
 
             }
         }
