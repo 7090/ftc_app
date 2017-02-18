@@ -23,7 +23,7 @@ public class TestOpMode extends OpMode {
     DcMotor rightDrive;
     DcMotor loader;
     DcMotor shooter;
-    DcMotor imPushingYourButtons;
+    DcMotor imPushingYourButton;
 
     public void init() {
         leftDrive = hardwareMap.dcMotor.get("leftDrive");   //assigns the motor leftDrive
@@ -33,7 +33,8 @@ public class TestOpMode extends OpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
         loader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
         shooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
-        imPushingYourButtons = hardwareMap.dcMotor.get("imPushingYourButton");
+        DcMotor imPushingYourButton = this.imPushingYourButton;
+        imPushingYourButton = hardwareMap.dcMotor.get("imPushingYourButton");
 
     }
 
@@ -69,14 +70,14 @@ public class TestOpMode extends OpMode {
 
         }
         if (gamepad1.a){
-            imPushingYourButtons.setPower(.25);
+            imPushingYourButton.setPower(.25);
 
         } else if (gamepad1.y) {
-            imPushingYourButtons.setPower(-.25);
+            imPushingYourButton.setPower(-.25);
 
         }
             else {
-            imPushingYourButtons.setPower(0);
+            imPushingYourButton.setPower(0);
 
         }
 

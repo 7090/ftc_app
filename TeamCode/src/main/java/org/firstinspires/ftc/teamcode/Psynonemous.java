@@ -33,7 +33,7 @@ public class Psynonemous extends LinearOpMode {
     DcMotor loader2;
     DcMotor loader;
     DcMotor shooter;
-    DcMotor imPushingYourButtons;
+    DcMotor imPushingYourButton;
     ColorSensor mindReader;
 
     String TeamColor;
@@ -53,7 +53,7 @@ public class Psynonemous extends LinearOpMode {
         shooter = hardwareMap.dcMotor.get("shooter");   // assigns the motor shooter
         shooter.setDirection(DcMotorSimple.Direction.REVERSE); // reverses polartiy on Shooter
         mindReader = hardwareMap.colorSensor.get("mindReader"); // assigns Color Sensor mindReader
-        imPushingYourButtons = hardwareMap.dcMotor.get("imPushingYourButtons");
+        imPushingYourButton = hardwareMap.dcMotor.get("imPushingYourButton");
        /* This is where i call all of my methods, meaning that this is the area where i tell the
        robot specifically what i want it to do */
         TeamColor = "Red";
@@ -131,24 +131,24 @@ public class Psynonemous extends LinearOpMode {
     }
 
     public  void PushyTheButton (){
-        imPushingYourButtons.setPower(1);
+        imPushingYourButton.setPower(1);
 
         ElapsedTime eTime = new ElapsedTime();
         eTime.reset();
         while (eTime.time() < 0.1);
 
-        imPushingYourButtons.setPower(0);
+        imPushingYourButton.setPower(0);
     }
 
 
     public void RejectyTheButton (){
-        imPushingYourButtons.setPower(-1);
+        imPushingYourButton.setPower(-1);
 
         ElapsedTime eTime = new ElapsedTime();
         eTime.reset();
         while (eTime.time() < 0.1);
 
-        imPushingYourButtons.setPower(0);
+        imPushingYourButton.setPower(0);
     }
 
     public void PushBeacon () {
