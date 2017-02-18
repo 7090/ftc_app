@@ -23,8 +23,7 @@ public class TestOpMode extends OpMode {
     DcMotor rightDrive;
     DcMotor loader;
     DcMotor shooter;
-    DcMotor loader2;
-    DcMotor imPushingYourButtons;
+    DcMotor imPushingYourButton;
 
     public void init() {
         leftDrive = hardwareMap.dcMotor.get("leftDrive");   //assigns the motor leftDrive
@@ -34,7 +33,8 @@ public class TestOpMode extends OpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
         loader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
         shooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
-        imPushingYourButtons = hardwareMap.dcMotor.get("imPushingYourButton");
+        DcMotor imPushingYourButton = this.imPushingYourButton;
+        imPushingYourButton = hardwareMap.dcMotor.get("imPushingYourButton");
 
     }
 
@@ -70,18 +70,17 @@ public class TestOpMode extends OpMode {
 
         }
         if (gamepad1.a){
-            imPushingYourButtons.setPower(.25);
+            imPushingYourButton.setPower(.25);
 
-        } else {
-            imPushingYourButtons.setPower(0);
+        } else if (gamepad1.y) {
+            imPushingYourButton.setPower(-.25);
+
+        }
+            else {
+            imPushingYourButton.setPower(0);
 
         }
 
-        if (gamepad1.y){
-            imPushingYourButtons.setPower(-.25);
-        } else {
-            imPushingYourButtons.setPower(0);
-        }
 
         //if (gamepad1.right_bumper) {    // this says that when the right bumper is pressed, reverse
             //shooter.setPower(-1);      //the shooter motor, otherwise the motor is inactive

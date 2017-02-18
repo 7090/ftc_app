@@ -25,7 +25,7 @@ public class Anonymous extends LinearOpMode {
         shooter = hardwareMap.dcMotor.get("shooter");
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
         loader.setDirection(DcMotorSimple.Direction.REVERSE);
-// lol
+
         waitForStart();
 
         rightDrive.setPower(-1);
