@@ -24,6 +24,8 @@ public class TestOpMode extends OpMode {
     DcMotor loader;
     DcMotor shooter;
     DcMotor loader2;
+    DcMotor imPushingYourButtons;
+
     public void init() {
         leftDrive = hardwareMap.dcMotor.get("leftDrive");   //assigns the motor leftDrive
         rightDrive = hardwareMap.dcMotor.get("rightDrive"); //assigns the motor rightDrive
@@ -32,7 +34,7 @@ public class TestOpMode extends OpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
         loader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
         shooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
-
+        imPushingYourButtons = hardwareMap.dcMotor.get("imPushingYourButton");
 
     }
 
@@ -40,14 +42,15 @@ public class TestOpMode extends OpMode {
 
     public void loop() {    // this keeps the controls going in a constant loop.
         leftDrive.setPower(-gamepad1.left_stick_y);     // this assigns the left drive motor to run
-                                                        // when the left stick is manipulated
-        rightDrive.setPower(-gamepad1.right_stick_y);     // this assigns the right drive motor to run
+        rightDrive.setPower(-gamepad1.right_stick_y);                                                // when the left stick is manipulated
+                                                // this assigns the right drive motor to run
                                                          // when the right stick is manipulated
 
 
-        if (gamepad1.right_trigger > 0.1) {     // this says that when the trigger is pushed, it
-                                                // activates the shooter, and to rest otherwise.
-            shooter.setPower(1);
+        if (gamepad1.right_trigger >= 0.1) {     // this says that when the trigger is pushed, it
+            shooter.setPower(1);                                   // activates the shooter, and to rest otherwise.
+
+
         } else {
             shooter.setPower(0);
         }
@@ -66,13 +69,27 @@ public class TestOpMode extends OpMode {
 
 
         }
-        if (gamepad1.right_bumper) {    // this says that when the right bumper is pressed, reverse
-            shooter.setPower(-1);      //the shooter motor, otherwise the motor is inactive
+        if (gamepad1.a){
+            imPushingYourButtons.setPower(.25);
 
         } else {
-            shooter.setPower(0);
+            imPushingYourButtons.setPower(0);
 
-            }
+        }
+
+        if (gamepad1.y){
+            imPushingYourButtons.setPower(-.25);
+        } else {
+            imPushingYourButtons.setPower(0);
+        }
+
+        //if (gamepad1.right_bumper) {    // this says that when the right bumper is pressed, reverse
+            //shooter.setPower(-1);      //the shooter motor, otherwise the motor is inactive
+
+       // } else {
+            //shooter.setPower(0);
+
+            //}
         }
     }
 

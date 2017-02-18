@@ -1,7 +1,19 @@
+/**
+ * Program Name: Psynonemous.java
+ * Programmer: Veronica Watson
+    Team: First Appalachian Robotics 7090
+ * Purpose: to run a robot during the 30 second autonomous period
+ */
+
 package org.firstinspires.ftc.teamcode;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,6 +21,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by TeamFar on 12/21/2016.
  */
+
+
 
 @Autonomous(name = "Psynonemous")
 public class Psynonemous extends LinearOpMode {
@@ -19,23 +33,33 @@ public class Psynonemous extends LinearOpMode {
     DcMotor loader2;
     DcMotor loader;
     DcMotor shooter;
+    DcMotor imPushingYourButtons;
+    ColorSensor mindReader;
+
+    String TeamColor;
+
+    /**
+     * Method Name: runOpMode
+     * Purpose: Mapping motors.
+     * Date Modified: 1/13/17
+     */
     public void runOpMode() throws InterruptedException {
 
-        leftDrive = hardwareMap.dcMotor.get("leftDrive");
-        rightDrive = hardwareMap.dcMotor.get("rightDrive");
-        leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        loader = hardwareMap.dcMotor.get("loader");
-        loader2 = hardwareMap.dcMotor.get("loader2");
-        shooter = hardwareMap.dcMotor.get("shooter");
-        loader2.setDirection(DcMotorSimple.Direction.REVERSE);
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        leftDrive = hardwareMap.dcMotor.get("leftDrive");   // assigns the motor leftDrive
+        rightDrive = hardwareMap.dcMotor.get("rightDrive"); // assigns the motor rightDrive
+        leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);  // reverses polarity on leftDrive
+        loader = hardwareMap.dcMotor.get("loader"); // assigns the motor loader
+        shooter = hardwareMap.dcMotor.get("shooter");   // assigns the motor shooter
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE); // reverses polartiy on Shooter
+        mindReader = hardwareMap.colorSensor.get("mindReader"); // assigns Color Sensor mindReader
+        imPushingYourButtons = hardwareMap.dcMotor.get("imPushingYourButtons");
        /* This is where i call all of my methods, meaning that this is the area where i tell the
        robot specifically what i want it to do */
+        TeamColor = "Red";
 
         waitForStart();
 
-        int i;
+       /* int i;
 
         for (i = 0; i < 16; i++) {     // This one calls the DriveForward command, making it drive
             DriveForward();            // forward for 16 iterations, meaning it will go through
@@ -50,10 +74,10 @@ public class Psynonemous extends LinearOpMode {
 
         for (i = 0; i < 16; i++) {      // this drives the robot forward, for the remaining time.
             DriveForward();
-        }
-
+        } **/
+        PushBeacon();
+        PewPewShooter();
     }
-
 
 
 
@@ -84,7 +108,7 @@ public class Psynonemous extends LinearOpMode {
 
 
         }
-        loader2.setPower(1);       // this sets the loader power to 1 (full power)
+
 
         try {       // Try Catch is used because if it does not sleep, it should continue to the next
             // step
@@ -97,7 +121,7 @@ public class Psynonemous extends LinearOpMode {
         }
 
         shooter.setPower(0.0);      // this stops the motors.
-        loader2.setPower(0.0);
+
     }
 
 
@@ -105,9 +129,92 @@ public class Psynonemous extends LinearOpMode {
 
     }
 
-    public void PushBeacon (){
+    public  void PushyTheButton (){
+        imPushingYourButtons.setPower(1);
+
+        ElapsedTime eTime = new ElapsedTime();
+        eTime.reset();
+        while (eTime.time() < 0.1);
+
+        imPushingYourButtons.setPower(0);
+    }
+
+
+    public void RejectyTheButton (){
+        imPushingYourButtons.setPower(-1);
+
+        ElapsedTime eTime = new ElapsedTime();
+        eTime.reset();
+        while (eTime.time() < 0.1);
+
+        imPushingYourButtons.setPower(0);
+    }
+
+    public void PushBeacon () {
+
+        float ohtheHUEmanatee[] = {0f, 0f, 0f};
+        final float value[] = ohtheHUEmanatee;
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
+        boolean bPrevState = false;
+        boolean bCurrState = false;
+        boolean bLedOn = false;
+        mindReader.enableLed(bLedOn);  //(For futrue Use. Your time will come.)
+
+        // while the op mode is active, loop and read the RGB data.
+        // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
+        //  while (opModeIsActive());
+
+        // update previous state variable.
+        bPrevState = bCurrState;
+
+        Color.RGBToHSV(mindReader.red() * 8, mindReader.green() * 8, mindReader.blue() * 8, ohtheHUEmanatee);
+
+        // send the info back to driver station using telemetry function.
+        int i = 0;
+        int k;
+
+        while(opModeIsActive() ) {
+            telemetry.addData("LED", bLedOn ? "On" : "Off");
+            telemetry.addData("Clear", mindReader.alpha());
+            telemetry.addData("Red  ", mindReader.red());
+            telemetry.addData("Green", mindReader.green());
+            telemetry.addData("Blue ", mindReader.blue());
+            telemetry.addData("Hue", ohtheHUEmanatee[0]);
+            telemetry.update();
+
+            while(mindReader.blue() > mindReader.red()){
+
+                PushyTheButton();
+                i++;
+                if (i% 4 == 0){
+                    RejectyTheButton();
+                    RejectyTheButton();
+                }
+
+
+            }
+            for (k = i/2; k>i; k++){
+                RejectyTheButton();
+            }
+
+        }
+
+        relativeLayout.post(new Runnable() {
+            public void run() {
+                relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, value));
+            }
+        });
+
+
+
+
+
 
     }
+
+
+
+
 
     public void LiftCapBall (){
 

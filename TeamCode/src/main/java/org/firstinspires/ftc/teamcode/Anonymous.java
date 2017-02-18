@@ -14,7 +14,6 @@ public class Anonymous extends LinearOpMode {
 
     DcMotor leftDrive;
     DcMotor rightDrive;
-    DcMotor loader2;
     DcMotor loader;
     DcMotor shooter;
 
@@ -23,10 +22,9 @@ public class Anonymous extends LinearOpMode {
         rightDrive = hardwareMap.dcMotor.get("rightDrive");
         rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         loader = hardwareMap.dcMotor.get("loader");
-        loader2 = hardwareMap.dcMotor.get("loader2");
         shooter = hardwareMap.dcMotor.get("shooter");
-        loader2.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        loader.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
@@ -37,7 +35,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < 2) {
+        while (eTime.time() < 1.6) {
         }
 
         leftDrive.setPower(0.0);
@@ -53,7 +51,7 @@ public class Anonymous extends LinearOpMode {
         }
 
 
-        loader2.setPower(1);
+        loader.setPower(1);
         try {
             Thread.sleep(2000);
         }
@@ -62,7 +60,7 @@ public class Anonymous extends LinearOpMode {
         }
 
         shooter.setPower(0.0);
-        loader2.setPower(0.0);
+        loader.setPower(0.0);
 
         rightDrive.setPower(-1);
         leftDrive.setPower(-1);
@@ -77,26 +75,3 @@ public class Anonymous extends LinearOpMode {
         rightDrive.setPower(0.0);
     }
 }
-    /*{
-        rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        shooter.setPower(1);
-        loader2.setPower(1);
-        }
-
-
-        {
-        eTime.reset();
-
-        while(eTime.time() < 2.5)
-
-        shooter.setPower(0);
-        loader2.setPower(0);
-
-        leftDrive.setPower(0.0);
-        rightDrive.setPower(0.0);
-        }
-
-    }
-}*/
