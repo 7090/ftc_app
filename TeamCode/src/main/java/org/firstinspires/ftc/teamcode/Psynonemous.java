@@ -77,7 +77,7 @@ public class Psynonemous extends LinearOpMode {
             DriveForward();
         } **/
         PushBeacon();
-        PewPewShooter();
+        //PewPewShooter();
     }
 
 
