@@ -1,11 +1,14 @@
+package org.firstinspires.ftc.teamcode;
+
+/**
+ * Created by TeamFAR on 2/19/2017.
+ */
 /**
  * Program Name: Psynonemous.java
  * Programmer: Veronica Watson
-    Team: First Appalachian Robotics 7090
+ Team: First Appalachian Robotics 7090
  * Purpose: to run a robot during the 30 second autonomous period
  */
-
-package org.firstinspires.ftc.teamcode;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,9 +17,9 @@ import android.view.View;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -26,7 +29,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name = "Psynonemous")
-public class Psynonemous extends LinearOpMode {
+public class PsynonemousWillEdit extends LinearOpMode {
 
 
     DcMotor leftDrive;
@@ -104,7 +107,7 @@ public class Psynonemous extends LinearOpMode {
         shooter.setPower(1);        // this sets the shooter power to 1 (full power)
 
         try {   // Try Catch is used because if it does not sleep, it should continue to the next
-                // step
+            // step
 
             Thread.sleep(1500);    // this makes it stop for 1.5 seconds, before continuing.
 
@@ -169,7 +172,7 @@ public class Psynonemous extends LinearOpMode {
         mindReader.enableLed(bLedOn);  //(For future use. Your time will come.)
 
 
-        
+
         // while the op mode is active, loop and read the RGB data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         //  while (opModeIsActive());
@@ -196,6 +199,7 @@ public class Psynonemous extends LinearOpMode {
 
                 PushyTheButton();
                 i++;
+
                 if (i% 4 == 0){
                     RejectyTheButton();
                     RejectyTheButton();
@@ -246,7 +250,7 @@ public class Psynonemous extends LinearOpMode {
         leftDrive.setPower(1);
 
         ElapsedTime eTime = new ElapsedTime();      // this is a time parameter, telling it to drive
-                                                    // for .1 seconds,
+        // for .1 seconds,
 
         eTime.reset();
 
@@ -270,7 +274,7 @@ public class Psynonemous extends LinearOpMode {
         leftDrive.setPower(-1);
 
         ElapsedTime eTime = new ElapsedTime();      // this is a time parameter, telling it to drive
-                                                    // for .1 seconds,
+        // for .1 seconds,
 
         eTime.reset();
 
@@ -298,7 +302,7 @@ public class Psynonemous extends LinearOpMode {
 
 
         ElapsedTime eTime = new ElapsedTime();      // this is a time parameter, telling it to drive
-                                                    // for .1 seconds,
+        // for .1 seconds,
 
         eTime.reset();
 

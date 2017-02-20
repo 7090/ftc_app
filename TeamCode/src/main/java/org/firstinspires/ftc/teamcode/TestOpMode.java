@@ -33,7 +33,6 @@ public class TestOpMode extends OpMode {
          leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
          loader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
          shooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
-         DcMotor imPushingYourButton = this.imPushingYourButton;
          imPushingYourButton = hardwareMap.dcMotor.get("imPushingYourButton");
 
      }
