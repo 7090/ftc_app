@@ -9,20 +9,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Call with LinearOpMode for access to autonomous functions such as drivetrainMoveInches
  */
 
-public class DriveTrainResources {
+class DriveTrainResources {
     private DcMotor left_drive;
     private DcMotor right_drive;
     private LinearOpMode linopmode;
 
     //For autonomous use
-    public DriveTrainResources(DcMotor left_drive, DcMotor right_drive, LinearOpMode linopmode){
+    DriveTrainResources(DcMotor left_drive, DcMotor right_drive, LinearOpMode linopmode){
         this.left_drive = left_drive;
         this.right_drive = right_drive;
         this.linopmode = linopmode;
     }
 
     //For non-autonomous use
-    public DriveTrainResources(DcMotor left_drive, DcMotor right_drive){
+    DriveTrainResources(DcMotor left_drive, DcMotor right_drive){
         this.left_drive = left_drive;
         this.right_drive = right_drive;
     }
@@ -39,7 +39,7 @@ public class DriveTrainResources {
      * @param timer: Time to run motors, auto-stops after this time. Time is in ms.
      */
 
-    public void drivetrainMoveTime (double RP, double LP, double timer) {
+    void drivetrainMoveTime (double RP, double LP, double timer) {
         //If no time is provided, run without timer - Will 19/2/17
         if (timer == 1234567){
             left_drive.setPower(LP);
@@ -156,8 +156,19 @@ public class DriveTrainResources {
     //// TODO: 2/22/2017 Write this method
     }
 
-    void drivetrainTurnDegrees (int turnDegrees){
-        final static double
+
+    /**
+     * Method name:
+     *
+     * @param turnDegrees: The number of degrees for the robot to turn
+     * Modified 2/22/17
+     */
+    void drivetrainTurnDegrees (final int turnDegrees){
+        final double wheelBase = 13.4375;
+        final double turnDivisor = 360 / turnDegrees;
+        double turnInches = (Math.PI * wheelBase)/turnDivisor;
+        drivetrainMoveInches(turnInches, -turnInches);
+
     }
 
 }
