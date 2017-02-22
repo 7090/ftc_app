@@ -53,9 +53,9 @@ public class Psynonemous extends LinearOpMode {
         loader = hardwareMap.dcMotor.get("loader");
         shooter = hardwareMap.dcMotor.get("shooter");
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-        mindReader = hardwareMap.colorSensor.get("mindReader");
-        travelLimit = hardwareMap.touchSensor.get("travelLimit");
-        imPushingYourButton = hardwareMap.dcMotor.get("imPushingYourButton");
+        mindReader = hardwareMap.colorSensor.get("sensorBeaconColor");
+        travelLimit = hardwareMap.touchSensor.get("sensorTouchPusher");
+        imPushingYourButton = hardwareMap.dcMotor.get("motorPusher");
 
 
        /* This is where i call all of my methods, meaning that this is the area where i tell the
@@ -196,13 +196,15 @@ public class Psynonemous extends LinearOpMode {
 
                 PushyTheButton();
                 i++;
-                if (i% 4 == 0){
+                //Go forward until remainder of 4/i = 0
+                if (i%4 == 0){
                     RejectyTheButton();
                     RejectyTheButton();
                 }
 
 
             }
+            //Go back how many times it's gone out
             for (k = i/2; k>i; k++){
                 RejectyTheButton();
             }
