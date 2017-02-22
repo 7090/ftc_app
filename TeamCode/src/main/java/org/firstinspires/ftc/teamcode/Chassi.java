@@ -89,18 +89,18 @@ public class Chassi {
         int rightTicksGoal = (int)(rightInches * ticksPerIn) + right_drive.getCurrentPosition() + fudgeFactor;
         int i = 0;
         while (i<100){
-            opmode.telemetry.update();
+            linopmode.telemetry.update();
             i++;
         }
-        if (opmode.opModeIsActive()){
+        if (linopmode.opModeIsActive()){
             left_drive.setTargetPosition(leftTicksGoal);
             right_drive.setTargetPosition(rightTicksGoal);
             left_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             right_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             left_drive.setPower(LP);
             right_drive.setPower(RP);
-            while (opmode.opModeIsActive()&& left_drive.isBusy() || right_drive.isBusy()) {
-                opmode.idle(); //This is so that the motors actually run, instead of just sitting there
+            while (linopmode.opModeIsActive()&& left_drive.isBusy() || right_drive.isBusy()) {
+                linopmode.idle(); //This is so that the motors actually run, instead of just sitting there
             }
             turnOffWheels();
         }
