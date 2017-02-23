@@ -130,7 +130,7 @@ class DriveTrainResources {
         //1.3 is for the drivetrain reduction (1.3 motor revs for each wheel rev), 12.12 is the
         // circumfrence of the center wheels in inches
         final double ticksPerIn = (ticksPerRev*1.3)/(12.12);
-        int leftTicksGoal = (int)(leftInches * ticksPerIn) + right_drive.getCurrentPosition() + fudgeFactor;
+        int leftTicksGoal = (int)(leftInches * ticksPerIn) + left_drive.getCurrentPosition() + fudgeFactor;
         int rightTicksGoal = (int)(rightInches * ticksPerIn) + right_drive.getCurrentPosition() + fudgeFactor;
 
         // Check if the opmode is active (Don't want the robot moving after the 30 second limit),
@@ -151,6 +151,10 @@ class DriveTrainResources {
             right_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
+    //This just allows calling drivetrainMoveInches with one argument
+    void drivetrainMoveInches(double inches){
+        drivetrainMoveInches(inches, inches);
+    }
 
     private void drivetrainMoveTicks (int rightTicks, int leftTicks, boolean isAdditive){
     //// TODO: 2/22/2017 Write this method
@@ -158,16 +162,29 @@ class DriveTrainResources {
 
 
     /**
-     * Method name:
-     *
-     * @param turnDegrees: The number of degrees for the robot to turn
+     * Method name: drivetrainTurnDegrees
+     * Purpose: Turns the robot a specified number of degrees
+     * Description: This method turns the robot a user-specified number of degrees. If an improper
+     * value for turnDirection is passed to the method, a right turn is the default.
+     * @param turnDegrees: int, the number of degrees for the robot to turn.
+     * @param turnDirection: char, the direction of the turn to make. 'r' for right turns, 'l' for
+     * turns.
      * Modified 2/22/17
      */
-    void drivetrainTurnDegrees (final int turnDegrees){
-        final double wheelBase = 13.4375;
-        final double turnDivisor = 360 / turnDegrees;
+    void drivetrainTurnDegrees (int turnDegrees, char turnDirection){
+        //// FIXME: 2/22/2017 Doesn't quite go as far as it should, 90 degrees input gives more like 80 degrees turn
+        double wheelBase = 13.4375;
+        double turnDivisor = 360 / turnDegrees;
         double turnInches = (Math.PI * wheelBase)/turnDivisor;
-        drivetrainMoveInches(turnInches, -turnInches);
+        switch (turnDirection){
+            case 'l': drivetrainMoveInches(-turnInches, turnInches);
+                break;
+            case 'r': drivetrainMoveInches(turnInches, -turnInches);
+                break;
+            default: drivetrainMoveInches(turnInches, -turnInches);
+                break;
+        }
+
 
     }
 

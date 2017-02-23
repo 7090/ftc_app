@@ -53,19 +53,29 @@ class FullOpMode extends LinearOpMode {
         motorPusher = hardwareMap.dcMotor.get("pusher");
         sensorColorBeacon = hardwareMap.colorSensor.get("sensorColorBeacon");
         sensorTouchPusher = hardwareMap.touchSensor.get("sensorTouchPusher");
+
         motorShooter.setDirection(DcMotorSimple.Direction.REVERSE);
         left_drive.setDirection(DcMotorSimple.Direction.REVERSE);
         left_drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right_drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        DriveTrainResources DriveTrainResources = new DriveTrainResources(left_drive, right_drive, FullOpMode.this);
+        DriveTrainResources DTR = new DriveTrainResources(left_drive, right_drive, FullOpMode.this);
         AutonomousResources AutoResources = new AutonomousResources(left_drive, right_drive, motorPusher, motorShooter, motorLoader, FullOpMode.this);
 
         waitForStart();
 
-        DriveTrainResources.drivetrainMoveInches(8,8);
-        AutoResources.launchParticles();
+        //DTR.drivetrainMoveInches(12,12);
+        //AutoResources.launchParticles();
+        //DTR.drivetrainTurnDegrees(45, 'l');
+        //DTR.drivetrainMoveInches(4);//Change this to a real value
+       // DTR.drivetrainTurnDegrees(45, 'r');
+        //DTR.drivetrainTurnDegrees(180, 'l');
+        AutoResources.findWhiteLine();
+
+        DTR.drivetrainTurnDegrees(90,'l');
+        AutoResources.pushBeacon();
 
 
     }

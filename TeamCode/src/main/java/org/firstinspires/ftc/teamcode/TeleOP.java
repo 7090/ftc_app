@@ -49,41 +49,33 @@ public class TeleOP extends OpMode {
          // when the right stick is manipulated
 
 
-         if (gamepad1.right_trigger >= 0.1) {     // this says that when the trigger is pushed, it
-             motorShooter.setPower(1);                                   // activates the motorShooter, and to rest otherwise.
-
-
+         if (gamepad1.right_trigger >= 0.1) {
+             motorShooter.setPower(1);
+         } else if (gamepad1.right_bumper){
+             motorShooter.setPower(-1);
          } else {
              motorShooter.setPower(0);
          }
 
-         if (gamepad1.left_bumper) {     // this says that when the left bumper is pushed, it
-             motorLoader.setPower(-1);        // runs the motorLoader motor backwards, and otherwise, when the
-             //trigger is pressed, to send the motorLoader motor forward and
-             //otherwise, stop all motion
+
+         if (gamepad1.left_bumper) {
+             motorLoader.setPower(-1);
          } else if (gamepad1.left_trigger > 0.7) {
              motorLoader.setPower(1);
-
          } else {
              motorLoader.setPower(0);
-
-
          }
+
+
          if (gamepad1.a) {
              motorPusher.setPower(.25);
-
          } else if (gamepad1.y) {
              motorPusher.setPower(-.25);
-
-
          } else {
              motorPusher.setPower(0);
-
          }
 
 
 
      }
-
-
  }

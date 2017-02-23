@@ -39,17 +39,17 @@ public class AutonomousResources {
 
 
 
-    void PushCapBall (){
+    void pushCapBall (){
 //todo dedicated capball pushing code here. - Will 19/2/17
     }
 
 
-    void FindWhiteLine (){
+    void findWhiteLine (){
 //todo line finding and following code here - Will 19/2/17
     }
 
 
-    void SenseColorRamp (){
+    void senseColorRamp (){
 //todo ramp colour sensor code here. - Will 19/2/17
     }
 
@@ -63,17 +63,17 @@ public class AutonomousResources {
     void launchParticles (){
         motorShooter.setPower(1);
 
-        //wait 1 second for the shooter motor to spin up, then start the loader motor
+        //wait .75 seconds for the shooter motor to spin up, then start the loader motor
         try {
-            Thread.sleep(1000);
+            Thread.sleep(750);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        motorLoader.setPower(1);
+        motorLoader.setPower(-1);
 
-        //wait 2.5 secs to shoot the balls, then turn it all off
+        //wait 1.5 secs to shoot the balls, then turn it all off
         try {
-            Thread.sleep(2500);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -123,7 +123,7 @@ public class AutonomousResources {
     }
 
 
-    void PushBeacon () {
+    void pushBeacon () {
 
 
     }
