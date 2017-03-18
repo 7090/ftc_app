@@ -58,7 +58,7 @@ class DriveTrainResources {
 
     }
 
-    public void drivetrainMoveTime(double RP, double LP){
+    public void drivetrainMove(double RP, double LP){
         drivetrainMoveTime(RP,LP,1234567);
     }
 
@@ -131,11 +131,10 @@ class DriveTrainResources {
         // circumfrence of the center wheels in inches
         final double ticksPerIn = (ticksPerRev*1.3)/(12.12);
         int leftTicksGoal = (int)(leftInches * ticksPerIn) + left_drive.getCurrentPosition() + fudgeFactor;
-        int rightTicksGoal = (int)(rightInches * ticksPerIn) + right_drive.getCurrentPosition() + fudgeFactor;
+        int rightTicksGoal = (int)(rightInches * ticksPerIn) + right_drive.getCurrentPosition();
 
         // Check if the opmode is active (Don't want the robot moving after the 30 second limit),
         // then set target ticks and run to that position
-        // // TODO: 2/22/2017 Add in timeout to prevent an infinite loop of waiting for the motors to go one tick...
         if (linopmode.opModeIsActive()){
             left_drive.setTargetPosition(leftTicksGoal);
             right_drive.setTargetPosition(rightTicksGoal);
@@ -143,7 +142,8 @@ class DriveTrainResources {
             right_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             left_drive.setPower(LP);
             right_drive.setPower(RP);
-            while (left_drive.isBusy() || right_drive.isBusy()){
+            long cutoff = System.currentTimeMillis() + 5000; //To keep the motors from waiting forever for one tick
+            while ((left_drive.isBusy() || right_drive.isBusy())&& cutoff > System.currentTimeMillis()){
                 //This is so that the motors actually run, instead of just sitting there
             }
             turnOffWheels();
@@ -156,6 +156,7 @@ class DriveTrainResources {
         drivetrainMoveInches(inches, inches);
     }
 
+
     private void drivetrainMoveTicks (int rightTicks, int leftTicks, boolean isAdditive){
     //// TODO: 2/22/2017 Write this method
     }
@@ -166,16 +167,19 @@ class DriveTrainResources {
      * Purpose: Turns the robot a specified number of degrees
      * Description: This method turns the robot a user-specified number of degrees. If an improper
      * value for turnDirection is passed to the method, a right turn is the default.
-     * @param turnDegrees: int, the number of degrees for the robot to turn.
+     * @param turnDegrees: double, the number of degrees for the robot to turn.
      * @param turnDirection: char, the direction of the turn to make. 'r' for right turns, 'l' for
      * turns.
      * Modified 2/22/17
      */
-    void drivetrainTurnDegrees (int turnDegrees, char turnDirection){
-        //// FIXME: 2/22/2017 Doesn't quite go as far as it should, 90 degrees input gives more like 80 degrees turn
-        double wheelBase = 13.4375;
-        double turnDivisor = 360 / turnDegrees;
-        double turnInches = (Math.PI * wheelBase)/turnDivisor;
+    void drivetrainTurnDegrees (double turnDegrees, char turnDirection){
+        //To correct for the 6.66% error, increase the value 0of the turnDegrees by 6.66%
+        final double fudgeFactor = .0666;
+        turnDegrees = turnDegrees + (turnDegrees* fudgeFactor);
+        double wheelBase = 15.5;
+        double turnDivisor = turnDegrees/360;
+        double turnInches = (Math.PI * wheelBase)*turnDivisor;
+        //Turn left or right, depending on user input
         switch (turnDirection){
             case 'l': drivetrainMoveInches(-turnInches, turnInches);
                 break;
@@ -184,8 +188,7 @@ class DriveTrainResources {
             default: drivetrainMoveInches(turnInches, -turnInches);
                 break;
         }
-
-
     }
+
 
 }

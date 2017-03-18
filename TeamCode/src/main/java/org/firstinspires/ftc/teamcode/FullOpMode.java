@@ -43,6 +43,7 @@ class FullOpMode extends LinearOpMode {
         DcMotor motorShooter;
         DcMotor motorPusher;
         ColorSensor sensorColorBeacon;
+        ColorSensor sensorColorLine;
         TouchSensor sensorTouchPusher;
 
         //Initialize hardware devices - Will 19/2/17
@@ -52,6 +53,7 @@ class FullOpMode extends LinearOpMode {
         motorShooter = hardwareMap.dcMotor.get("shooter");
         motorPusher = hardwareMap.dcMotor.get("pusher");
         sensorColorBeacon = hardwareMap.colorSensor.get("sensorColorBeacon");
+        sensorColorLine = hardwareMap.colorSensor.get("sensorColorLine");
         sensorTouchPusher = hardwareMap.touchSensor.get("sensorTouchPusher");
 
         motorShooter.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -60,22 +62,43 @@ class FullOpMode extends LinearOpMode {
         right_drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sensorColorBeacon.enableLed(false);
+        sensorColorLine.enableLed(true);
 
         DriveTrainResources DTR = new DriveTrainResources(left_drive, right_drive, FullOpMode.this);
-        AutonomousResources AutoResources = new AutonomousResources(left_drive, right_drive, motorPusher, motorShooter, motorLoader, FullOpMode.this);
+        AutonomousResources AutoResources = new AutonomousResources(left_drive, right_drive,
+                motorPusher, motorShooter, motorLoader, sensorTouchPusher, sensorColorBeacon, sensorColorLine, FullOpMode.this);
 
         waitForStart();
 
-        //DTR.drivetrainMoveInches(12,12);
+        //DTR.drivetrainMoveInches(12,12);// Go from the wall to the shooting spot
+
         //AutoResources.launchParticles();
+
+        //went 43 degrees
+        DTR.drivetrainTurnDegrees(45, 'l');
+        long cutoff = System.currentTimeMillis() + 7000;
+        while (cutoff> System.currentTimeMillis()){
+        }
+        DTR.drivetrainTurnDegrees(45, 'l');
+        cutoff = System.currentTimeMillis() + 7000;
+        while (cutoff> System.currentTimeMillis()){
+        }
+        //Went 86 degrees
+        DTR.drivetrainTurnDegrees(90, 'l');
+        cutoff = System.currentTimeMillis() + 7000;
+        while (cutoff> System.currentTimeMillis()){
+
+        }
+
+        DTR.drivetrainTurnDegrees(180,'l');
         //DTR.drivetrainTurnDegrees(45, 'l');
         //DTR.drivetrainMoveInches(4);//Change this to a real value
-       // DTR.drivetrainTurnDegrees(45, 'r');
+        //DTR.drivetrainTurnDegrees(45, 'r');
         //DTR.drivetrainTurnDegrees(180, 'l');
-        AutoResources.findWhiteLine();
-
-        DTR.drivetrainTurnDegrees(90,'l');
-        AutoResources.pushBeacon();
+        //AutoResources.findWhiteLine();
+        //DTR.drivetrainTurnDegrees(180,'l');
+        //AutoResources.pushBeacon();
 
 
     }

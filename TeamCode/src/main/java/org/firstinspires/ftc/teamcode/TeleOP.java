@@ -39,6 +39,8 @@ public class TeleOP extends OpMode {
          leftDrive.setDirection(DcMotor.Direction.REVERSE);  //Reveres polarity on the left drive motor
          motorLoader.setDirection(DcMotor.Direction.REVERSE); //reverses polarity on the loader motor
          motorShooter.setDirection(DcMotor.Direction.REVERSE); // reverses polarity on the shooter motor
+         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
      }
 
 
@@ -50,7 +52,7 @@ public class TeleOP extends OpMode {
 
 
          if (gamepad1.right_trigger >= 0.1) {
-             motorShooter.setPower(1);
+             motorShooter.setPower(.65);
          } else if (gamepad1.right_bumper){
              motorShooter.setPower(-1);
          } else {

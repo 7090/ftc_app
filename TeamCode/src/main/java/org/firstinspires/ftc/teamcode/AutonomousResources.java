@@ -9,6 +9,7 @@ import android.view.View;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
@@ -23,19 +24,23 @@ public class AutonomousResources {
     private DcMotor motorShooter;
     private DcMotor motorLoader;
     private ColorSensor sensorColorBeacon;
+    private ColorSensor sensorColorLine;
     private TouchSensor sensorTouchPusher;
     private LinearOpMode linopmode;
 
-        public AutonomousResources (DcMotor left_drive, DcMotor right_drive, DcMotor motorPusher,DcMotor motorShooter, DcMotor motorLoader, LinearOpMode linopmode){
+        public AutonomousResources (DcMotor left_drive, DcMotor right_drive, DcMotor motorPusher,DcMotor motorShooter, DcMotor motorLoader, TouchSensor sensorTouchPusher, ColorSensor sensorColorBeacon, ColorSensor sensorColorLine, LinearOpMode linopmode){
             this.left_drive = left_drive;
             this.right_drive = right_drive;
             this.motorPusher = motorPusher;
             this.motorShooter = motorShooter;
             this.motorLoader = motorLoader;
+            this.sensorTouchPusher = sensorTouchPusher;
+            this.sensorColorBeacon = sensorColorBeacon;
+            this.sensorColorLine = sensorColorLine;
             this.linopmode = linopmode;
         }
 
-
+    DriveTrainResources DTR = new DriveTrainResources(left_drive, right_drive, linopmode);
 
 
 
@@ -45,6 +50,23 @@ public class AutonomousResources {
 
 
     void findWhiteLine (){
+        boolean isDone = false;
+        long cutoff = 0;
+
+        while (!isDone || (cutoff + 1000) < System.currentTimeMillis()) {
+            DTR.drivetrainMove(.4,.4);
+            if (sensorColorLine.equals(16)) {
+                if (!isDone) {
+                    isDone = true;
+                    cutoff = System.currentTimeMillis();
+                }
+            }
+            else {
+                isDone = false;
+            }
+
+        }
+        DTR.turnOffWheels();
 //todo line finding and following code here - Will 19/2/17
     }
 
@@ -69,11 +91,12 @@ public class AutonomousResources {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         motorLoader.setPower(-1);
 
-        //wait 1.5 secs to shoot the balls, then turn it all off
+        //wait 2 secs to shoot the balls, then turn it all off
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

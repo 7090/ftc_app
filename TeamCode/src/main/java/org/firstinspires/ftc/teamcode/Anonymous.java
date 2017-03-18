@@ -35,7 +35,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < 1.6) {
+        while (eTime.time() < 1.3) {
         }
 
         leftDrive.setPower(0.0);
@@ -68,7 +68,7 @@ public class Anonymous extends LinearOpMode {
 
         eTime.reset();
 
-        while (eTime.time() < 1) {
+        while (eTime.time() < 1.3) {
         }
 
         leftDrive.setPower(0.0);
